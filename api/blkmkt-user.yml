@@ -1,0 +1,373 @@
+swagger: '2.0'
+info:
+  description: 这是一篇关于用户的API文档
+  version: 1.0.0
+  title: 用户API文档
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    name: ShZh7
+    url: 'https://github.com/Sh-Zh-7'
+    email: zhihaoshen7@qq.com
+  license:
+    name: GPL-v3.0
+    url: 'https://www.gnu.org/licenses/gpl-3.0.html'
+host: 'localhost:9000'
+basePath: /
+tags:
+  - name: 用户
+    description: 所有关于用户的内容
+  - name: 用户登录与注册
+    description: 所有关于用户登陆与注册的内容
+paths:
+  /user/login:
+    post:
+      tags:
+        - 用户登录与注册
+      summary: 登录
+      description: 给定学号和密码进行登录
+      operationId: loginUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: userLoginVo
+          description: 用户登录所需信息的实体
+          required: true
+          schema:
+            $ref: '#/definitions/UserLoginVo'
+      responses:
+        '200':
+          description: 登录成功
+          schema:
+            $ref: '#/definitions/ResponseWithData«UserEntity»'
+        '11000':
+          description: 账号密码输错了
+          schema:
+            example:
+              code: 11000
+              msg: "账号或密码错误"
+          
+  /user/register:
+    post:
+      tags:
+        - 用户登录与注册
+      summary: 注册
+      description: 给定注册信息进行注册
+      operationId: registerUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: registerVo
+          description: 用户注册所需信息的实体
+          required: true
+          schema:
+            $ref: '#/definitions/RegisterVo'
+      responses:
+        '200':
+          description: 注册成功
+          schema:
+            $ref: '#/definitions/Response'
+        '11001':
+          description: 学号重复
+          schema:
+            example:
+              code: 11001
+              msg: "该用户已经存在"
+        '11002':
+          description: 手机号重复
+          schema:
+            example:
+              code: 11002
+              msg: "该手机号码已经被注册"
+  /user/user/:
+    post:
+      tags:
+        - 用户
+      summary: 保存信息
+      description: 保存信息
+      operationId: saveUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: user
+          description: user entity
+          required: true
+          schema:
+            $ref: '#/definitions/UserEntity'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+    put:
+      tags:
+        - 用户
+      summary: 更新信息
+      description: 更新信息
+      operationId: updateUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: user
+          description: user entity
+          required: true
+          schema:
+            $ref: '#/definitions/UserEntity'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+    delete:
+      tags:
+        - 用户
+      summary: 删除
+      description: 删除信息
+      operationId: deleteUsingDELETE
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: ids
+          description: id array
+          required: true
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+  /user/user/list:
+    get:
+      tags:
+        - 用户
+      summary: 所有信息
+      description: 根据分页参数（可缺省）获取信息
+      operationId: listUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: pageNo
+          in: query
+          description: Number of pages
+          required: false
+          type: integer
+          format: int64
+        - name: pageSize
+          in: query
+          description: Size of pages
+          required: false
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ResponseWithData«PageUtils«UserEntity»»'
+  '/user/user/{id}':
+    get:
+      tags:
+        - 用户
+      summary: 信息
+      description: 获取指定id的信息
+      operationId: infoUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ResponseWithData«UserEntity»'
+definitions:
+  PageUtils«UserEntity»:
+    type: object
+    properties:
+      currPage:
+        type: integer
+        format: int32
+        example: 1
+        description: 当前页数
+      list:
+        type: array
+        description: 集合
+        items:
+          $ref: '#/definitions/UserEntity'
+      pageSize:
+        type: integer
+        format: int32
+        example: 10
+        description: 每页记录数
+      totalCount:
+        type: integer
+        format: int32
+        example: 1
+        description: 总记录数
+      totalPage:
+        type: integer
+        format: int32
+        example: 1
+        description: 总页数
+    title: PageUtils«UserEntity»
+  RegisterVo:
+    type: object
+    properties:
+      name:
+        type: string
+        example: 王涛
+        description: 学生姓名
+      password:
+        type: string
+        example: 123456
+        description: 密码
+      phone:
+        type: string
+        example: 18268795310
+        description: 手机号
+      studentId:
+        type: string
+        example: 2018302080181
+        description: 学生学号
+    title: RegisterVo
+  Response:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+        example: 200
+      msg:
+        type: string
+        example: success
+    title: Response
+  ResponseWithData:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+        example: 200
+      data:
+        type: object
+      msg:
+        type: string
+        example: success
+    title: ResponseWithData
+  ResponseWithData«PageUtils«UserEntity»»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+        example: 200
+      msg:
+        type: string
+        example: success
+      data:
+        $ref: '#/definitions/PageUtils«UserEntity»'
+    title: ResponseWithData«PageUtils«UserEntity»»
+  ResponseWithData«UserEntity»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+        example: 200
+      data:
+        $ref: '#/definitions/UserEntity'
+      msg:
+        type: string
+        example: success
+    title: ResponseWithData«UserEntity»
+  UserEntity:
+    type: object
+    properties:
+      address:
+        type: string
+        example: 信13-613
+        description: 用户地址
+      createTime:
+        type: string
+        format: date-time
+        description: 创建时间
+      description:
+        type: string
+        example: HelloWorld
+        description: 用户描述
+      enabled:
+        type: integer
+        format: int32
+        example: 1
+        description: 是否启用
+      headImgUrl:
+        type: string
+        example: baidu.com
+        description: 用户头像
+      id:
+        type: integer
+        format: int32
+        example: 1
+        description: 用户id
+      mobile:
+        type: string
+        example: 18379873072
+        description: 用户手机号
+      name:
+        type: string
+        example: 张三
+        description: 用户姓名
+      nickname:
+        type: string
+        example: 李四
+        description: 用户昵称
+      password:
+        type: string
+        example: 114514
+        description: 用户密码
+      sex:
+        type: integer
+        format: int32
+        example: 1
+        description: 用户性别
+      studentId:
+        type: string
+        example: 2018302080181
+        description: 用户学号
+      updateTime:
+        type: string
+        format: date-time
+        description: 更新时间
+    title: UserEntity
+  UserLoginVo:
+    type: object
+    properties:
+      password:
+        type: string
+        example: 123456
+        description: 密码
+      studentId:
+        type: string
+        example: 2018302080181
+        description: 学生学号
+    title: UserLoginVo
