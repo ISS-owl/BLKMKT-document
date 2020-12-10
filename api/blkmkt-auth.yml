@@ -1,0 +1,141 @@
+swagger: '2.0'
+info:
+  description: 这是一篇关于认证的API文档
+  version: '1.0'
+  title: 认证API文档
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    name: ShZh7
+    url: 'https://github.com/Sh-Zh-7'
+    email: zhihaoshen7@qq.com
+  license:
+    name: GPL-v3.0
+    url: 'https://www.gnu.org/licenses/gpl-3.0.html'
+host: 'localhost:20000'
+basePath: /
+tags:
+  - name: 认证
+    description: 所有关于认证的内容
+paths:
+  /auth/login:
+    post:
+      tags:
+        - 认证
+      summary: 登录
+      description: 给定学号和密码进行登录
+      operationId: loginUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: userLoginVo
+          description: 用户登录所需信息的实体
+          required: true
+          schema:
+            $ref: '#/definitions/UserLoginVo'
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              code: 200
+              msg: "success"
+              token: "eyJ0eXAiOiJK"
+              refresh_token: "eyJ0eXAi"
+              user:
+                id: 3
+                name: "王涛"
+                password: ""
+                studentId: "2018302080182"
+                nickname: "wtnb"
+                headImgUrl: "baidu.com"
+                mobile: "18268795310"
+                sex: 1
+                enabled: 1 
+                createTime: "2020-12-08T03:00:43.000+0000"
+                updateTime: "2020-12-08T03:00:43.000+0000"
+                address: "信13-613"
+                description: "GPA第6"
+        '11000':
+          description: 账号密码输错了
+          schema:
+            example:
+              code: 11000
+              msg: "账号或密码错误"      
+  /auth/logout:
+    get:
+      tags:
+        - 认证
+      summary: 登出
+      description: 登出指定studentId的用户
+      operationId: logoutUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: studentId
+          in: query
+          description: 用户学号
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              code: 200
+              msg: "success"
+  /auth/refreshToken:
+    post:
+      tags:
+        - 认证
+      summary: 刷新token
+      description: 在token快要过期时刷新token
+      operationId: refreshTokenUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: refreshTokenVo
+          description: refreshToken和学号
+          required: true
+          schema:
+            $ref: '#/definitions/RefreshTokenVo'
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              code: 200
+              msg: "success"
+              token: "eyJ0eXAiOiJKV1QiLC"
+
+definitions:
+  RefreshTokenVo:
+    type: object
+    properties:
+      refreshToken:
+        type: string
+        example: "5df917c7c0384036b19d1ff2cd48c614"
+        description: 刷新令牌
+      studentId:
+        type: string
+        example: 2018302080181
+        description: 学生学号
+    title: RefreshTokenVo
+  UserLoginVo:
+    type: object
+    properties:
+      password:
+        type: string
+        example: 123456
+        description: 密码
+      studentId:
+        type: string
+        example: 2018302080181
+        description: 学生学号
+    title: UserLoginVo
