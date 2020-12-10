@@ -72,6 +72,16 @@ paths:
           description: 注册成功
           schema:
             $ref: '#/definitions/Response'
+        '400':
+          description: 后台数据校验未通过, msg是具体信息
+          schema:
+            example:
+              code: 400
+              msg: "data validation error"
+              data:
+                studentId: "学号长度不符合规范"
+                password: "不能为null"
+                phone: "手机号不符合规范"
         '11001':
           description: 学号重复
           schema:
