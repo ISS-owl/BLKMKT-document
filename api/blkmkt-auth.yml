@@ -113,6 +113,53 @@ paths:
               code: 200
               msg: "success"
               token: "eyJ0eXAiOiJKV1QiLC"
+  /auth/register:
+    post:
+      tags:
+        - 认证
+      summary: 注册
+      description: 给定足够的信息进行登录
+      operationId: registerUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: registerVo
+          description: 用户注册所需信息的实体
+          required: true
+          schema:
+            $ref: '#/definitions/RegisterVo'
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              code: 200
+              msg: "success"
+        '400':
+          description: 后台数据校验未通过, msg是具体信息
+          schema:
+            example:
+              code: 400
+              msg: "data validation error"
+              data:
+                studentId: "学号长度不符合规范"
+                password: "不能为null"
+                phone: "手机号不符合规范"
+        '11001':
+          description: 学号重复
+          schema:
+            example:
+              code: 11001
+              msg: "该用户已经存在"
+        '11002':
+          description: 手机号重复
+          schema:
+            example:
+              code: 11002
+              msg: "该手机号码已经被注册"
 
 definitions:
   RefreshTokenVo:
@@ -139,3 +186,42 @@ definitions:
         example: 2018302080181
         description: 学生学号
     title: UserLoginVo
+  RegisterVo:
+    type: object
+    required:
+      - address
+      - name
+      - nickname
+      - password
+      - studentId
+    properties:
+      address:
+        type: string
+        example: 信13-613
+        description: 地址
+      name:
+        type: string
+        example: 王涛
+        description: 学生姓名
+      nickname:
+        type: string
+        example: wt
+        description: 昵称
+      password:
+        type: string
+        example: 123456
+        description: 密码
+      phone:
+        type: string
+        example: 18268795310
+        description: 手机号
+      sex:
+        type: integer
+        format: int32
+        example: 1
+        description: 性别
+      studentId:
+        type: string
+        example: 2018302080181
+        description: 学生学号
+    title: RegisterVo
