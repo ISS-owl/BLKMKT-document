@@ -2,16 +2,6 @@ version: "2"
 # Docker compose file to compose necessary docker containers
 # on ECS in order to build develop environment
 services:
-  # Redis
-  redis:
-    container_name: redis
-    image: redis
-    volumes:
-      - /mydata/redis/data:/data
-      - /mydata/redis/conf/redis.conf:/etc/redis/redis.conf
-    command: redis-server /etc/redis/redis.conf --appendonly yes
-    ports:
-      - "6379:6379"
   # Mysql
   mysql:
     container_name: mysql
@@ -25,6 +15,43 @@ services:
       - /mydata/mysql/mysql-files:/var/lib/mysql-files
     ports:
       - "3306:3306"
+    restart: always
+  # Redis
+  redis:
+    container_name: redis
+    image: redis
+    volumes:
+      - /mydata/redis/data:/data
+      - /mydata/redis/conf/redis.conf:/etc/redis/redis.conf
+    command: redis-server /etc/redis/redis.conf --appendonly yes
+    ports:
+      - "6379:6379"
+    restart: always
+  # ElasticSearch
+  elasticsearch:
+    container_name: elasticsearch
+    image: elasticsearch:7.6.2
+    environment:
+      - ES_JAVA_OPTS="-Xms64m -Xmx512m"
+      - discovery.type=single-node
+    volumes:
+      - /mydata/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - /mydata/elasticsearch/data:/usr/share/elasticsearch/data
+      - /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    restart: always
+  # Kibana
+  kibana:
+    container_name: kibana
+    image: kibana:7.6.2
+    web:
+      links:
+        - "elasticsearch:elastisearch"
+    ports:
+      - "5601:5601"
+    restart: always
   # Nacos
   nacos:
     image: nacos/nacos-server:latest
