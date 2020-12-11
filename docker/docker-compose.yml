@@ -2,6 +2,16 @@ version: "2"
 # Docker compose file to compose necessary docker containers
 # on ECS in order to build develop environment
 services:
+  # Redis
+  redis:
+    container_name: redis
+    image: redis
+    volumes:
+      - /mydata/redis/data:/data
+      - /mydata/redis/conf/redis.conf:/etc/redis/redis.conf
+    command: redis-server /etc/redis/redis.conf --appendonly yes
+    ports:
+      - "6379:6379"
   # Mysql
   mysql:
     container_name: mysql
