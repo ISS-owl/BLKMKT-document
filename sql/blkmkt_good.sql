@@ -8,7 +8,7 @@ CREATE TABLE `good`  (
   `category` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '分类',
   `total_num` int(11) NOT NULL COMMENT '总数',
   `current_num` int(11) NOT NULL COMMENT '当前数量',
-  `like` int(11) COMMENT '点赞数',
+  `like_num` int(11) COMMENT '点赞数',
   `good_img_url` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商品图片的url', 
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
   `update_time` datetime(0) NOT NULL COMMENT '更新时间',
