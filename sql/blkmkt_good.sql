@@ -4,6 +4,7 @@ CREATE TABLE `good`  (
   `owner_id` int(11) NOT NULL COMMENT '卖家id',
   `price` int(11) NOT NULL COMMENT '价格',
   `gtype` int(2) NOT NULL COMMENT '出货收货[0 - 出货, 1 - 收货]',
+  `status` int(2) NOT NULL COMMENT '是否上架[0 - 上架, 1 - 未上架]',
   `category` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '分类',
   `total_num` int(11) NOT NULL COMMENT '总数',
   `current_num` int(11) NOT NULL COMMENT '当前数量',
