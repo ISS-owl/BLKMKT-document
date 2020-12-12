@@ -4,12 +4,14 @@ CREATE TABLE `good`  (
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '货物名称',
   `owner_id` int(11) NOT NULL COMMENT '卖家id',
   `price` int(11) NOT NULL COMMENT '价格',
-  `gtype` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '分类',
+  `gtype` int(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '出货收货[0 - 出货, 1 - 收货]',
+  `category` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '分类',
   `total_num` int(11) NOT NULL COMMENT '总数',
   `current_num` int(11) NOT NULL COMMENT '当前数量',
+  `like` int(11) COMMENT '点赞数',
   `good_img_url` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商品图片的url', 
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
-  `cancel_time` datetime(0) NULL DEFAULT NULL COMMENT '取消时间',
+  `update_time` datetime(0) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
 );
 ALTER TABLE `good` COMMENT '货物表';
