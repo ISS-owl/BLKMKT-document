@@ -21,22 +21,25 @@ ALTER TABLE `good` COMMENT '货物表';
 
 DROP TABLE IF EXISTS `good_comment`;
 CREATE TABLE `good_comment` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `good_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `content` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `content_type` tinyint NOT NULL COMMENT '评论类型[0 - 对商品的直接评论，1 - 对评论的回复]',
-  `create_time` datetime(0) NULL DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `good_id` int(11) NOT NULL COMMENT '商品id',
+  `user_id` int(11) NOT NULL COMMENT '用户id',
+  `content` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '内容',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
 );
 ALTER TABLE `good_comment` COMMENT '货物评论';
 
-DROP TABLE IF EXISTS `good_comment_replay`;
-CREATE TABLE `good_comment_replay` (
-  `id` bigint not null auto_increment comment 'id',
-  `comment_id` bigint comment '评论id',
-  `reply_id` bigint comment '回复id',
-  primary key (id)
+DROP TABLE IF EXISTS `comment_replay`;
+CREATE TABLE `comment_replay` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `comment_id` int(11) NOT NULL COMMENT '评论id',
+  `user_id` int(11) NOT NULL COMMENT '用户id',
+  `content` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '内容',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NOT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
 );
-ALTER TABLE `good_comment_replay` COMMENT '对评价的回复';
+ALTER TABLE `comment_replay` COMMENT '对评价的回复';
 
