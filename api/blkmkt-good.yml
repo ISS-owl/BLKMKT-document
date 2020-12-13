@@ -508,7 +508,17 @@ paths:
           description: 商品信息
           required: true
           schema:
-            $ref: '#/definitions/GoodEntity'
+            example:
+              title: 代课
+              subtitle: 早八青楼520代课
+              gtype: 1
+              category: 课程资料
+              ownerId: 1
+              price: 5
+              totalNum: 1
+              currentNum: 1
+              goodImgUrl: baidu.com
+              description: 不会点名，签到就可以走
       responses:
         '200':
           description: OK
@@ -520,7 +530,7 @@ paths:
       tags:
         - 商品上架
       summary: 更新上架商品
-      description: 更新上架商品同时更新数据库
+      description: 更新上架商品同时更新数据库（必须携带id）
       operationId: updateGoodUsingPUT
       consumes:
         - application/json
@@ -532,7 +542,18 @@ paths:
           description: 商品信息
           required: true
           schema:
-            $ref: '#/definitions/GoodEntity'
+            example:
+              id: 6
+              title: 代课
+              subtitle: 早八青楼520代课
+              gtype: 1
+              category: 课程资料
+              ownerId: 1
+              price: 5
+              totalNum: 1
+              currentNum: 1
+              goodImgUrl: baidu.com
+              description: 不会点名，签到就可以走
       responses:
         '200':
           description: OK
