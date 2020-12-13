@@ -14,85 +14,13 @@ info:
 host: 'localhost:9000'
 basePath: /
 tags:
-  - name: 用户
-    description: 所有关于用户的内容
-  - name: 用户登录与注册
-    description: 所有关于用户登陆与注册的内容
+  - name: 管理员管理用户
 paths:
-
-  /user/user/:
-    post:
-      tags:
-        - 用户
-      summary: 保存信息
-      description: 保存信息
-      operationId: saveUsingPOST
-      consumes:
-        - application/json
-      produces:
-        - '*/*'
-      parameters:
-        - in: body
-          name: user
-          description: user entity
-          required: true
-          schema:
-            $ref: '#/definitions/UserEntity'
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/Response'
-    put:
-      tags:
-        - 用户
-      summary: 更新信息
-      description: 更新信息
-      operationId: updateUsingPUT
-      consumes:
-        - application/json
-      produces:
-        - '*/*'
-      parameters:
-        - in: body
-          name: user
-          description: user entity
-          required: true
-          schema:
-            $ref: '#/definitions/UserEntity'
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/Response'
-    delete:
-      tags:
-        - 用户
-      summary: 删除
-      description: 删除信息
-      operationId: deleteUsingDELETE
-      produces:
-        - '*/*'
-      parameters:
-        - in: body
-          name: ids
-          description: id array
-          required: true
-          schema:
-            type: array
-            items:
-              type: integer
-              format: int32
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/Response'
   /user/user/list:
     get:
       tags:
-        - 用户
-      summary: 所有信息
+        - 管理员管理用户
+      summary: 分页获取所有用户信息
       description: 根据分页参数（可缺省）获取信息
       operationId: listUsingGET
       produces:
@@ -115,11 +43,100 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/ResponseWithData«PageUtils«UserEntity»»'
+  /user/user/:
+    post:
+      tags:
+        - 管理员管理用户
+      summary: 手动创建用户
+      description: 手动创建用户
+      operationId: saveUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: user
+          description: user entity
+          required: true
+          schema:
+            example:
+              address: 信13-613
+              description: HelloWorld
+              enabled: 1
+              headImgUrl: baidu.com
+              mobile: "18379873072"
+              name: 张三
+              nickname: 李四
+              password: "114514"
+              sex: 1
+              studentId: "2018302080181"
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+    put:
+      tags:
+        - 用户
+      summary: 更新信息
+      description: 更新信息（必须要携带用户ID）
+      operationId: updateUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: user
+          description: user entity
+          required: true
+          schema:
+            example:
+              id: 1
+              address: "信13-613"
+              description: "HelloWorld"
+              enabled: 1
+              headImgUrl: "baidu.com"
+              mobile: "18379873072"
+              name: "张三"
+              nickname: "李四"
+              password: "114514"
+              sex: 1
+              studentId: "2018302080181"
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+    delete:
+      tags:
+        - 用户
+      summary: 销毁帐号
+      description: 销毁自己的帐号
+      operationId: deleteUsingDELETE
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: ids
+          description: id array
+          required: true
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
   '/user/user/{id}':
     get:
       tags:
         - 用户
-      summary: 信息
+      summary: 获取用户信息细节
       description: 获取指定id的信息
       operationId: infoUsingGET
       produces:
@@ -135,7 +152,18 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/ResponseWithData«UserEntity»'
+            example:
+              id: 1
+              address: "信13-613"
+              description: "HelloWorld"
+              enabled: 1
+              headImgUrl: "baidu.com"
+              mobile: "18379873072"
+              name: "张三"
+              nickname: "李四"
+              password: ""
+              sex: 1
+              studentId: 2018302080181
 definitions:
   PageUtils«UserEntity»:
     type: object
