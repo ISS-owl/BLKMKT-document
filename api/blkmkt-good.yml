@@ -369,6 +369,227 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/ResponseWithData«GoodCommentReplayEntity»'
+  /good/good/owner_all_goods:
+    get:
+      tags:
+        - 用户及其商品
+      summary: 获取用户所有的商品
+      description: 商品包括上架和未上架的
+      operationId: getOwnerAllGoodsUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: ownerId
+          in: query
+          description: 用户id
+          required: true
+          type: integer
+          format: int32
+          x-example: 1
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              msg: success
+              code: 200
+              data:
+                - id: 6
+                  ownerId: 1
+                  price: 300
+                  gtype: 0
+                  status: 1
+                  category: 电子产品
+                  totalNum: 1
+                  currentNum: 0
+                  likeNum: 2
+                  goodImgUrl: baidu.com
+                  createTime: '2020-12-12T14:59:57.000+0000'
+                  updateTime: '2020-12-12T14:59:57.000+0000'
+                  title: 华为手机
+                  subtitle: 出95成新华为手机
+                  description: 300出9成新华为手机
+
+  /good/good/owner_not_up_goods:
+    get:
+      tags:
+        - 用户及其商品
+      summary: 获取用户所有未上架的商品
+      description: 不包括上架的
+      operationId: getOwnerNotUpGoodsUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: ownerId
+          in: query
+          description: 用户id
+          required: true
+          type: integer
+          format: int32
+          x-example: 1
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              msg: success
+              code: 200
+              data:
+                - id: 6
+                  ownerId: 1
+                  price: 300
+                  gtype: 0
+                  status: 0
+                  category: 电子产品
+                  totalNum: 1
+                  currentNum: 0
+                  likeNum: 2
+                  goodImgUrl: baidu.com
+                  createTime: '2020-12-12T14:59:57.000+0000'
+                  updateTime: '2020-12-12T14:59:57.000+0000'
+                  title: 华为手机
+                  subtitle: 出95成新华为手机
+                  description: 300出9成新华为手机
+              
+  /good/good/owner_up_goods:
+    get:
+      tags:
+        - 用户及其商品
+      summary: 获取用户所有上架的商品
+      description: 不包括未上架的
+      operationId: getOwnerUpGoodsUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: ownerId
+          in: query
+          description: 用户id
+          required: true
+          type: integer
+          format: int32
+          x-example: 1
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              msg: success
+              code: 200
+              data:
+                - id: 6
+                  ownerId: 1
+                  price: 300
+                  gtype: 0
+                  status: 0
+                  category: 电子产品
+                  totalNum: 1
+                  currentNum: 0
+                  likeNum: 2
+                  goodImgUrl: baidu.com
+                  createTime: '2020-12-12T14:59:57.000+0000'
+                  updateTime: '2020-12-12T14:59:57.000+0000'
+                  title: 华为手机
+                  subtitle: 出95成新华为手机
+                  description: 300出9成新华为手机
+  /good/good/up:
+    post:
+      tags:
+        - 商品上架
+      summary: 创建商品并上架
+      description: 直接创建商品实体并上架
+      operationId: upGoodUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: good
+          description: 商品信息
+          required: true
+          schema:
+            $ref: '#/definitions/GoodEntity'
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              code: 200
+              msg: "success"
+    put:
+      tags:
+        - 商品上架
+      summary: 更新上架商品
+      description: 更新上架商品同时更新数据库
+      operationId: updateGoodUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: good
+          description: 商品信息
+          required: true
+          schema:
+            $ref: '#/definitions/GoodEntity'
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              code: 200
+              msg: "success"
+    delete:
+      tags:
+        - 商品上架
+      summary: 商品下架
+      description: 根据id直接删除上架商品
+      operationId: deleteGoodUsingDELETE
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: ids
+          description: 商品id
+          required: true
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              code: 200
+              msg: "success"
+  '/good/good/up/{id}':
+    get:
+      tags:
+        - 商品上架
+      summary: 商品上架
+      description: 根据给定id上架已有的，未上架的商品
+      operationId: upGoodUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: 未上架的商品id
+          required: true
+          type: integer
+          format: int32
+          x-example: 1
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              code: 200
+              msg: "success"
+
 definitions:
   GoodCommentEntity:
     type: object
@@ -423,10 +644,9 @@ definitions:
   GoodEntity:
     type: object
     properties:
-      cancelTime:
+      category:
         type: string
-        format: date-time
-        description: 取消时间
+        description: 分类
       createTime:
         type: string
         format: date-time
@@ -434,40 +654,51 @@ definitions:
       currentNum:
         type: integer
         format: int32
-        example: 233
         description: 当前数量
+      description:
+        type: string
+        description: 描述
       goodImgUrl:
         type: string
-        example: baidu.com
         description: 商品图片的url
       gtype:
-        type: string
-        example: 国创
-        description: 分类
+        type: integer
+        format: int32
+        description: '出货收货[0 - 出货, 1 - 收货]'
       id:
         type: integer
         format: int32
-        example: 1
         description: 货物id
-      name:
-        type: string
-        example: 华为手机
-        description: 货物名称
+      likeNum:
+        type: integer
+        format: int32
+        description: 点赞数
       ownerId:
         type: integer
         format: int32
-        example: 2
         description: 卖家id
       price:
         type: integer
         format: int32
-        example: 4399
         description: 价格
+      status:
+        type: integer
+        format: int32
+        description: '是否上架[0 - 上架, 1 - 未上架]'
+      subtitle:
+        type: string
+        description: 副标题
+      title:
+        type: string
+        description: 标题
       totalNum:
         type: integer
         format: int32
-        example: 2333
         description: 总数
+      updateTime:
+        type: string
+        format: date-time
+        description: 更新时间
     title: GoodEntity
   PageUtils«GoodCommentEntity»:
     type: object
