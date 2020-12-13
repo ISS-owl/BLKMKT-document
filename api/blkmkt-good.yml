@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   description: 这是一篇关于商品的API文档
-  version: 1.0.0
+  version: 1.1.0
   title: 商品API文档
   termsOfService: 'http://swagger.io/terms/'
   contact:
@@ -691,7 +691,32 @@ paths:
                 pageNum: 1
                 totalPages: 1
               code: 200
-
+  '/good/good/like/{id}':
+    put:
+      tags:
+        - 商品上架
+      summary: 点赞上架商品
+      description: 给上架的商品点赞
+      operationId: likeGoodUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: 已上架的商品id
+          required: true
+          type: integer
+          format: int32
+          x-example: 1
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              code: 200
+              msg: "success"
 definitions:
   GoodCommentEntity:
     type: object
