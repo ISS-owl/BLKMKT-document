@@ -589,6 +589,108 @@ paths:
             example:
               code: 200
               msg: "success"
+  /search/good:
+    get:
+      tags:
+        - 商品检索
+      summary: 搜索引擎，检索商品用
+      description: 通过检索，过滤，排序，分页得到商品信息
+      operationId: searchGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: keyword
+          in: query
+          description: 关键字（查询商品title）
+          type: string
+          x-example: "算法导论"
+        - name: priceRange
+          in: query
+          description: 价格区间【\_1表示小于等于1，3_表示大于等于3，1\_3表示大于等于1小于等于3】
+          type: string
+          x-example: "150_300"
+        - name: gtype
+          in: query
+          description: 出货还是收货【0-出货，1收货】
+          type: integer
+          format: int32
+          x-example: 0
+        - name: category
+          in: query
+          description: 种类【书籍PDF，课程资料，电子产品，生活用品，其它信息】
+          type: string
+          x-example: "电子产品"
+        - name: hasStock
+          in: query
+          description: 是否有货【0-无，1-有】
+          type: integer
+          format: int32
+          x-example: "1"
+        - name: sort
+          in: query
+          description: 排序字段【[price/likeNum/createTime/updateTime]_[asc/desc]】
+          type: string
+          x-example: "price_asc"
+        - name: pageNum
+          in: query
+          description: 当前页码
+          type: integer
+          format: int32
+          x-example: 1
+        - name: pageSize
+          in: query
+          description: 当前页大小
+          type: integer
+          format: int32
+          x-example: 3
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              msg: success
+              data:
+                goodModelList:
+                  - id: 1
+                    ownerId: 1
+                    price: 200
+                    gtype: 0
+                    category: 电子产品
+                    hasStock: 1
+                    likeNum: 0
+                    goodImgUrl: baidu.com
+                    createTime: '2020-12-12T12:32:08.368+0000'
+                    updateTime: '2020-12-12T12:32:08.368+0000'
+                    title: 华为手机
+                    subtitle: 出9成新华为手机
+                  - id: 2
+                    ownerId: 2
+                    price: 300
+                    gtype: 1
+                    category: 书籍PDF
+                    hasStock: 1
+                    likeNum: 0
+                    goodImgUrl: baidu.com
+                    createTime: '2020-12-12T12:40:00.794+0000'
+                    updateTime: '2020-12-12T12:40:00.794+0000'
+                    title: 收算法导论
+                    subtitle: 应付算法期末开卷用
+                  - id: 5
+                    ownerId: 2
+                    price: 50
+                    gtype: 0
+                    category: 生活用品
+                    hasStock: 1
+                    likeNum: 0
+                    goodImgUrl: baidu.com
+                    createTime: '2020-12-12T12:44:27.982+0000'
+                    updateTime: '2020-12-12T12:44:27.982+0000'
+                    title: 出篮球
+                    subtitle: 50r出一个全新篮球
+                total: 3
+                pageNum: 1
+                totalPages: 1
+              code: 200
 
 definitions:
   GoodCommentEntity:
