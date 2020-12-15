@@ -25,6 +25,7 @@ CREATE TABLE `good_comment` (
   `good_id` int(11) NOT NULL COMMENT '商品id',
   `user_id` int(11) NOT NULL COMMENT '用户id',
   `content` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '内容',
+  `like_num` int(11) NULL DEFAULT NULL COMMENT '点赞数',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
@@ -37,6 +38,7 @@ CREATE TABLE `comment_replay` (
   `comment_id` int(11) NOT NULL COMMENT '评论id',
   `user_id` int(11) NOT NULL COMMENT '用户id',
   `content` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '内容',
+  `like_num` int(11) NULL DEFAULT NULL COMMENT '点赞数',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
