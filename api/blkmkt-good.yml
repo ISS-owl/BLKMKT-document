@@ -235,27 +235,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/ResponseWithData«PageUtils«GoodEntity»»'
-  '/good/good/{id}':
-    get:
-      tags:
-        - 管理员
-      summary: 获取单个商品的信息
-      description: 获取指定id的商品信息
-      operationId: infoUsingGET_2
-      produces:
-        - '*/*'
-      parameters:
-        - name: id
-          in: path
-          description: id
-          required: true
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/ResponseWithData«GoodEntity»'
   /good/good_comment/:
     post:
       tags:
@@ -418,6 +397,31 @@ paths:
                     createTime: '2020-12-13T12:32:32.000+0000'
                     updateTime: '2020-12-13T12:32:32.000+0000'
                   replayEntities: []
+  '/good/good_comment/like/{id}':
+    put:
+      tags:
+        - 商品评论
+      summary: 点赞评论
+      description: 点赞评论
+      operationId: likeUsingPUT_1
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: 评论的id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              code: 200
+              msg: "success"
             
   /good/comment_replay/:
     post:
@@ -499,6 +503,31 @@ paths:
             example:
               code: 200
               msg: "success"
+  '/good/comment_replay/like/{id}':
+    put:
+      tags:
+        - 评论回复
+      summary: 点赞回复
+      description: 点赞回复
+      operationId: likeUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: 回复的id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              code: 200
+              msg: "success"
   /good/comment_replay/list:
     get:
       tags:
@@ -526,27 +555,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/ResponseWithData«PageUtils«CommentReplyEntity»»'
-  '/good/comment_replay/{id}':
-    get:
-      tags:
-        - 管理员
-      summary: 获取单个回复的信息
-      description: 获取指定id的信息
-      operationId: infoUsingGET
-      produces:
-        - '*/*'
-      parameters:
-        - name: id
-          in: path
-          description: id
-          required: true
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/CommentReplyEntity'
   /good/good/up:
     post:
       tags:
