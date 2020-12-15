@@ -14,19 +14,118 @@ info:
 host: 'localhost:7000'
 basePath: /
 tags:
+  - name: 管理员
+    description: 只有管理员才有权限操作的内容
   - name: 商品
     description: 所有关于商品的内容
   - name: 商品评论
     description: 所有关于商品评论的内容
-  - name: 商品评论回复
+  - name: 评论回复
     description: 所有关于商品评论回复的内容
+  - name: 商品上架
+    description: 所有关于商品上架的信息
+  - name: 商品检索
+    description: 根据各种检索条件的组合得到商品列表
 paths:
   /good/good/:
+    get:
+      tags:
+        - 商品
+      summary: 获取用户所属的商品信息
+      description: 根据传入的模式不同返回不同的商品信息
+      operationId: getGoodByConditionUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: mode
+          in: query
+          description: 模式（0-未上架，1-上架，2-全部）
+          required: true
+          type: integer
+          format: int32
+          x-example: 2
+        - name: ownerId
+          in: query
+          description: 用户id
+          required: true
+          type: integer
+          format: int32
+          x-example: 1
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            example:
+              code: 200
+              msg: success
+              data:
+                - id: 7
+                  ownerId: 1
+                  price: 200
+                  gtype: 0
+                  status: 1
+                  category: 电子产品
+                  totalNum: 1
+                  currentNum: 1
+                  likeNum: 3
+                  goodImgUrl: baidu.com
+                  createTime: '2020-12-13T01:59:23.000+0000'
+                  updateTime: '2020-12-13T01:59:23.000+0000'
+                  title: 华为手机
+                  subtitle: 出9成新华为手机
+                  description: 500出9成新华为手机
+                - id: 8
+                  ownerId: 1
+                  price: 10
+                  gtype: 0
+                  status: 1
+                  category: 课程资料
+                  totalNum: 1
+                  currentNum: 1
+                  likeNum: 0
+                  goodImgUrl: baidu.com
+                  createTime: '2020-12-13T01:59:27.000+0000'
+                  updateTime: '2020-12-13T01:59:27.000+0000'
+                  title: 收WPFTest
+                  subtitle: 就是那个HJC上课用到的WPFTest
+                  description: 王涛NB
+                - id: 10
+                  ownerId: 1
+                  price: 5
+                  gtype: 1
+                  status: 1
+                  category: 课程资料
+                  totalNum: 1
+                  currentNum: 1
+                  likeNum: 0
+                  goodImgUrl: baidu.com
+                  createTime: '2020-12-13T06:41:34.000+0000'
+                  updateTime: '2020-12-13T06:41:34.000+0000'
+                  title: 代课
+                  subtitle: 早八青楼520代课
+                  description: 不会点名，签到就可以走
+                - id: 11
+                  ownerId: 1
+                  price: 200
+                  gtype: 0
+                  status: 0
+                  category: 课程资料
+                  totalNum: 1
+                  currentNum: 1
+                  likeNum: 0
+                  goodImgUrl: bing.com
+                  createTime: '2020-12-15T03:42:51.000+0000'
+                  updateTime: '2020-12-15T03:42:51.000+0000'
+                  title: 出算法李春葆
+                  subtitle: 5r出算法李春葆
+                  description: 内含算法开卷考内容
+              
     post:
       tags:
         - 商品
-      summary: 保存信息
-      description: 保存信息
+      summary: 创建商品
+      description: 创建商品
       operationId: saveUsingPOST_2
       consumes:
         - application/json
@@ -38,17 +137,31 @@ paths:
           description: good entity
           required: true
           schema:
-            $ref: '#/definitions/GoodEntity'
+            example:
+              ownerId: 1
+              price: 200
+              gtype: 0
+              status: 0
+              category: 课程资料
+              totalNum: 1
+              currentNum: 1
+              goodImgUrl: bing.com
+              title: 出算法李春葆
+              subtitle: 5r出算法李春葆
+              description: 内含算法开卷考内容
+              
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/Response'
+            example:
+              code: 200
+              msg: "success"
     put:
       tags:
         - 商品
-      summary: 更新信息
-      description: 更新信息
+      summary: 更新商品
+      description: 更新商品（必须指定id）
       operationId: updateUsingPUT_2
       consumes:
         - application/json
@@ -60,17 +173,21 @@ paths:
           description: good entity
           required: true
           schema:
-            $ref: '#/definitions/GoodEntity'
+            example:
+              id: 11
+              price: 5
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/Response'
+            example:
+              code: 200
+              msg: "success"
     delete:
       tags:
         - 商品
-      summary: 删除
-      description: 删除信息
+      summary: 删除商品
+      description: 删除商品
       operationId: deleteUsingDELETE_2
       produces:
         - '*/*'
@@ -88,12 +205,14 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/Response'
+            example:
+              code: 200
+              msg: "success"
   /good/good/list:
     get:
       tags:
-        - 商品
-      summary: 所有信息
+        - 管理员
+      summary: 获取所有商品信息
       description: 根据分页参数（可缺省）获取信息
       operationId: listUsingGET_2
       produces:
@@ -119,9 +238,9 @@ paths:
   '/good/good/{id}':
     get:
       tags:
-        - 商品
-      summary: 信息
-      description: 获取指定id的信息
+        - 管理员
+      summary: 获取单个商品的信息
+      description: 获取指定id的商品信息
       operationId: infoUsingGET_2
       produces:
         - '*/*'
@@ -141,124 +260,8 @@ paths:
     post:
       tags:
         - 商品评论
-      summary: 保存信息
-      description: 保存信息
-      operationId: saveUsingPOST
-      consumes:
-        - application/json
-      produces:
-        - '*/*'
-      parameters:
-        - in: body
-          name: goodComment
-          description: goodComment entity
-          required: true
-          schema:
-            $ref: '#/definitions/GoodCommentEntity'
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/Response'
-    put:
-      tags:
-        - 商品评论
-      summary: 更新信息
-      description: 更新信息
-      operationId: updateUsingPUT
-      consumes:
-        - application/json
-      produces:
-        - '*/*'
-      parameters:
-        - in: body
-          name: goodComment
-          description: goodComment entity
-          required: true
-          schema:
-            $ref: '#/definitions/GoodCommentEntity'
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/Response'
-    delete:
-      tags:
-        - 商品评论
-      summary: 删除
-      description: 删除信息
-      operationId: deleteUsingDELETE
-      produces:
-        - '*/*'
-      parameters:
-        - in: body
-          name: ids
-          description: id array
-          required: true
-          schema:
-            type: array
-            items:
-              type: integer
-              format: int32
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/Response'
-  /good/good_comment/list:
-    get:
-      tags:
-        - 商品评论
-      summary: 所有信息
-      description: 根据分页参数（可缺省）获取信息
-      operationId: listUsingGET
-      produces:
-        - '*/*'
-      parameters:
-        - name: pageNo
-          in: query
-          description: Number of pages
-          required: false
-          type: integer
-          format: int64
-        - name: pageSize
-          in: query
-          description: Size of pages
-          required: false
-          type: integer
-          format: int64
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/ResponseWithData«PageUtils«GoodCommentEntity»»'
-  '/good/good_comment/{id}':
-    get:
-      tags:
-        - 商品评论
-      summary: 信息
-      description: 获取指定id的信息
-      operationId: infoUsingGET
-      produces:
-        - '*/*'
-      parameters:
-        - name: id
-          in: path
-          description: id
-          required: true
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/ResponseWithData«GoodCommentEntity»'
-  /good/good_comment_replay/:
-    post:
-      tags:
-        - 商品评论回复
-      summary: 保存信息
-      description: 保存信息
+      summary: 增加评论
+      description: 增加评论
       operationId: saveUsingPOST_1
       consumes:
         - application/json
@@ -266,21 +269,26 @@ paths:
         - '*/*'
       parameters:
         - in: body
-          name: goodCommentReplay
-          description: goodCommentReplay entity
+          name: goodComment
+          description: goodComment entity
           required: true
           schema:
-            $ref: '#/definitions/GoodCommentReplayEntity'
+            example:
+              goodId: 7
+              userId: 2
+              content: 收，妮明天有空不
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/Response'
+            example:
+              code: 200
+              msg: "success"
     put:
       tags:
-        - 商品评论回复
-      summary: 更新信息
-      description: 更新信息
+        - 商品评论
+      summary: 修改评论
+      description: 修改评论
       operationId: updateUsingPUT_1
       consumes:
         - application/json
@@ -288,21 +296,25 @@ paths:
         - '*/*'
       parameters:
         - in: body
-          name: goodCommentReplay
-          description: goodCommentReplay entity
+          name: goodComment
+          description: goodComment entity
           required: true
           schema:
-            $ref: '#/definitions/GoodCommentReplayEntity'
+            example:
+              id: 1
+              content: 我们中国真的太棒啦
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/Response'
+            example:
+              code: 200
+              msg: "success"
     delete:
       tags:
-        - 商品评论回复
-      summary: 删除
-      description: 删除信息
+        - 商品评论
+      summary: 删除评论
+      description: 删除评论，包含直接评论和对评论的回复
       operationId: deleteUsingDELETE_1
       produces:
         - '*/*'
@@ -320,12 +332,14 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/Response'
-  /good/good_comment_replay/list:
+            example:
+              code: 200
+              msg: "success"
+  /good/good_comment/list:
     get:
       tags:
-        - 商品评论回复
-      summary: 所有信息
+        - 管理员
+      summary: 获取所有评论
       description: 根据分页参数（可缺省）获取信息
       operationId: listUsingGET_1
       produces:
@@ -347,14 +361,178 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/ResponseWithData«PageUtils«GoodCommentReplayEntity»»'
-  '/good/good_comment_replay/{id}':
+            $ref: '#/definitions/ResponseWithData«PageUtils«GoodCommentEntity»»'
+  '/good/good_comment/{good_id}':
     get:
       tags:
-        - 商品评论回复
-      summary: 信息
-      description: 获取指定id的信息
+        - 商品评论
+      summary: 获取单个商品评论
+      description: 根据商品id查询所有评论信息
       operationId: infoUsingGET_1
+      produces:
+        - '*/*'
+      parameters:
+        - name: good_id
+          in: path
+          description: 商品id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              msg: success
+              code: 200
+              data:
+                - userId: 1
+                  username: 王涛
+                  headImgUrl: baidu.com
+                  commentEntity:
+                    id: 2
+                    goodId: 7
+                    userId: 1
+                    content: 我们华为真是太棒啦
+                    createTime: '2020-12-13T12:25:18.000+0000'
+                    updateTime: '2020-12-13T12:25:18.000+0000'
+                  replayEntities:
+                    - userId: 1
+                      username: 王涛
+                      headImgUrl: baidu.com
+                      commentReplayEntity:
+                        id: 3
+                        commentId: 2
+                        userId: 1
+                        content: 你做的好！你做的好啊！
+                        createTime: '2020-12-13T12:33:01.000+0000'
+                        updateTime: '2020-12-13T12:33:01.000+0000'
+                - userId: 2
+                  username: 方正
+                  headImgUrl: google.com
+                  commentEntity:
+                    id: 4
+                    goodId: 7
+                    userId: 2
+                    content: 收，妮明天有空不
+                    createTime: '2020-12-13T12:32:32.000+0000'
+                    updateTime: '2020-12-13T12:32:32.000+0000'
+                  replayEntities: []
+            
+  /good/comment_replay/:
+    post:
+      tags:
+        - 评论回复
+      summary: 添加回复
+      description: 添加回复
+      operationId: saveUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: commentReplay
+          description: commentReplay entity
+          required: true
+          schema:
+            example:
+              commentId: 2
+              userId: 1
+              content: 你做的好！你做的好啊！
+            
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              code: 200
+              msg: "success"
+    put:
+      tags:
+        - 评论回复
+      summary: 修改回复
+      description: 修改回复
+      operationId: updateUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: commentReplay
+          description: commentReplay entity
+          required: true
+          schema:
+            example:
+              id: 1
+              content: 至福
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              code: 200
+              msg: "success"
+    delete:
+      tags:
+        - 评论回复
+      summary: 删除回复
+      description: 删除回复
+      operationId: deleteUsingDELETE
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: ids
+          description: id array
+          required: true
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            example:
+              code: 200
+              msg: "success"
+  /good/comment_replay/list:
+    get:
+      tags:
+        - 管理员
+      summary: 获取所有回复信息
+      description: 根据分页参数（可缺省）获取信息
+      operationId: listUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: pageNo
+          in: query
+          description: Number of pages
+          required: false
+          type: integer
+          format: int64
+        - name: pageSize
+          in: query
+          description: Size of pages
+          required: false
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ResponseWithData«PageUtils«CommentReplyEntity»»'
+  '/good/comment_replay/{id}':
+    get:
+      tags:
+        - 管理员
+      summary: 获取单个回复的信息
+      description: 获取指定id的信息
+      operationId: infoUsingGET
       produces:
         - '*/*'
       parameters:
@@ -363,134 +541,12 @@ paths:
           description: id
           required: true
           type: integer
-          format: int64
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/ResponseWithData«GoodCommentReplayEntity»'
-  /good/good/owner_all_goods:
-    get:
-      tags:
-        - 用户及其商品
-      summary: 获取用户所有的商品
-      description: 商品包括上架和未上架的
-      operationId: getOwnerAllGoodsUsingGET
-      produces:
-        - '*/*'
-      parameters:
-        - name: ownerId
-          in: query
-          description: 用户id
-          required: true
-          type: integer
           format: int32
-          x-example: 1
       responses:
         '200':
           description: OK
           schema:
-            example:
-              msg: success
-              code: 200
-              data:
-                - id: 6
-                  ownerId: 1
-                  price: 300
-                  gtype: 0
-                  status: 1
-                  category: 电子产品
-                  totalNum: 1
-                  currentNum: 0
-                  likeNum: 2
-                  goodImgUrl: baidu.com
-                  createTime: '2020-12-12T14:59:57.000+0000'
-                  updateTime: '2020-12-12T14:59:57.000+0000'
-                  title: 华为手机
-                  subtitle: 出95成新华为手机
-                  description: 300出9成新华为手机
-
-  /good/good/owner_not_up_goods:
-    get:
-      tags:
-        - 用户及其商品
-      summary: 获取用户所有未上架的商品
-      description: 不包括上架的
-      operationId: getOwnerNotUpGoodsUsingGET
-      produces:
-        - '*/*'
-      parameters:
-        - name: ownerId
-          in: query
-          description: 用户id
-          required: true
-          type: integer
-          format: int32
-          x-example: 1
-      responses:
-        '200':
-          description: OK
-          schema:
-            example:
-              msg: success
-              code: 200
-              data:
-                - id: 6
-                  ownerId: 1
-                  price: 300
-                  gtype: 0
-                  status: 0
-                  category: 电子产品
-                  totalNum: 1
-                  currentNum: 0
-                  likeNum: 2
-                  goodImgUrl: baidu.com
-                  createTime: '2020-12-12T14:59:57.000+0000'
-                  updateTime: '2020-12-12T14:59:57.000+0000'
-                  title: 华为手机
-                  subtitle: 出95成新华为手机
-                  description: 300出9成新华为手机
-              
-  /good/good/owner_up_goods:
-    get:
-      tags:
-        - 用户及其商品
-      summary: 获取用户所有上架的商品
-      description: 不包括未上架的
-      operationId: getOwnerUpGoodsUsingGET
-      produces:
-        - '*/*'
-      parameters:
-        - name: ownerId
-          in: query
-          description: 用户id
-          required: true
-          type: integer
-          format: int32
-          x-example: 1
-      responses:
-        '200':
-          description: OK
-          schema:
-            example:
-              msg: success
-              code: 200
-              data:
-                - id: 6
-                  ownerId: 1
-                  price: 300
-                  gtype: 0
-                  status: 0
-                  category: 电子产品
-                  totalNum: 1
-                  currentNum: 0
-                  likeNum: 2
-                  goodImgUrl: baidu.com
-                  createTime: '2020-12-12T14:59:57.000+0000'
-                  updateTime: '2020-12-12T14:59:57.000+0000'
-                  title: 华为手机
-                  subtitle: 出95成新华为手机
-                  description: 300出9成新华为手机
+            $ref: '#/definitions/CommentReplyEntity'
   /good/good/up:
     post:
       tags:
@@ -739,56 +795,6 @@ paths:
               code: 200
               msg: "success"
 definitions:
-  GoodCommentEntity:
-    type: object
-    properties:
-      content:
-        type: string
-        description: 内容
-      contentType:
-        type: integer
-        format: int32
-        example: 1
-        description: '评论类型[0 - 对商品的直接评论，1 - 对评论的回复]'
-      createTime:
-        type: string
-        format: date-time
-        description: 创建时间
-      goodId:
-        type: integer
-        format: int32
-        example: 2
-        description: 货物id
-      id:
-        type: integer
-        format: int32
-        example: 1
-        description: id
-      userId:
-        type: integer
-        format: int32
-        example: 3
-        description: 用户id
-    title: GoodCommentEntity
-  GoodCommentReplayEntity:
-    type: object
-    properties:
-      commentId:
-        type: integer
-        format: int64
-        example: 2
-        description: 评论id
-      id:
-        type: integer
-        format: int64
-        example: 1
-        description: id
-      replyId:
-        type: integer
-        format: int64
-        example: 3
-        description: 回复id
-    title: GoodCommentReplayEntity
   GoodEntity:
     type: object
     properties:
@@ -848,64 +854,63 @@ definitions:
         format: date-time
         description: 更新时间
     title: GoodEntity
-  PageUtils«GoodCommentEntity»:
+  GoodCommentEntity:
     type: object
     properties:
-      currPage:
+      content:
+        type: string
+        description: 内容
+      createTime:
+        type: string
+        format: date-time
+        description: 创建时间
+      goodId:
+        type: integer
+        format: int32
+        example: 2
+        description: 货物id
+      id:
         type: integer
         format: int32
         example: 1
-        description: 当前页数
-      list:
-        type: array
-        description: 集合
-        items:
-          $ref: '#/definitions/GoodCommentEntity'
-      pageSize:
+        description: id
+      updateTime:
+        type: string
+        format: date-time
+        description: 更新时间
+      userId:
         type: integer
         format: int32
-        example: 10
-        description: 每页记录数
-      totalCount:
-        type: integer
-        format: int32
-        example: 1
-        description: 总记录数
-      totalPage:
-        type: integer
-        format: int32
-        example: 1
-        description: 总页数
-    title: PageUtils«GoodCommentEntity»
-  PageUtils«GoodCommentReplayEntity»:
+        example: 3
+        description: 用户id
+    title: GoodCommentEntity
+  CommentReplyEntity:
     type: object
     properties:
-      currPage:
+      commentId:
         type: integer
         format: int32
-        example: 1
-        description: 当前页数
-      list:
-        type: array
-        description: 集合
-        items:
-          $ref: '#/definitions/GoodCommentReplayEntity'
-      pageSize:
+        description: 评论id
+      content:
+        type: string
+        description: 内容
+      createTime:
+        type: string
+        format: date-time
+        description: 创建时间
+      id:
         type: integer
         format: int32
-        example: 10
-        description: 每页记录数
-      totalCount:
+        description: id
+      updateTime:
+        type: string
+        format: date-time
+        description: 更新时间
+      userId:
         type: integer
         format: int32
-        example: 1
-        description: 总记录数
-      totalPage:
-        type: integer
-        format: int32
-        example: 1
-        description: 总页数
-    title: PageUtils«GoodCommentReplayEntity»
+        description: 用户id
+    title: CommentReplyEntity
   PageUtils«GoodEntity»:
     type: object
     properties:
@@ -935,6 +940,65 @@ definitions:
         example: 1
         description: 总页数
     title: PageUtils«GoodEntity»
+  PageUtils«GoodCommentEntity»:
+    type: object
+    properties:
+      currPage:
+        type: integer
+        format: int32
+        example: 1
+        description: 当前页数
+      list:
+        type: array
+        description: 集合
+        items:
+          $ref: '#/definitions/GoodCommentEntity'
+      pageSize:
+        type: integer
+        format: int32
+        example: 10
+        description: 每页记录数
+      totalCount:
+        type: integer
+        format: int32
+        example: 1
+        description: 总记录数
+      totalPage:
+        type: integer
+        format: int32
+        example: 1
+        description: 总页数
+    title: PageUtils«GoodCommentEntity»
+  PageUtils«CommentReplyEntity»:
+    type: object
+    properties:
+      currPage:
+        type: integer
+        format: int32
+        example: 1
+        description: 当前页数
+      list:
+        type: array
+        description: 集合
+        items:
+          $ref: '#/definitions/CommentReplyEntity'
+      pageSize:
+        type: integer
+        format: int32
+        example: 10
+        description: 每页记录数
+      totalCount:
+        type: integer
+        format: int32
+        example: 1
+        description: 总记录数
+      totalPage:
+        type: integer
+        format: int32
+        example: 1
+        description: 总页数
+    title: PageUtils«CommentReplyEntity»
+
   Response:
     type: object
     properties:
@@ -959,7 +1023,7 @@ definitions:
         type: string
         example: success
     title: ResponseWithData«GoodCommentEntity»
-  ResponseWithData«GoodCommentReplayEntity»:
+  ResponseWithData«CommentReplyEntity»:
     type: object
     properties:
       code:
@@ -967,11 +1031,11 @@ definitions:
         format: int32
         example: 200
       data:
-        $ref: '#/definitions/GoodCommentReplayEntity'
+        $ref: '#/definitions/CommentReplayEntity'
       msg:
         type: string
         example: success
-    title: ResponseWithData«GoodCommentReplayEntity»
+    title: ResponseWithData«CommentReplayEntity»
   ResponseWithData«GoodEntity»:
     type: object
     properties:
@@ -998,7 +1062,7 @@ definitions:
         type: string
         example: success
     title: ResponseWithData«PageUtils«GoodCommentEntity»»
-  ResponseWithData«PageUtils«GoodCommentReplayEntity»»:
+  ResponseWithData«PageUtils«CommentReplyEntity»»:
     type: object
     properties:
       code:
@@ -1006,11 +1070,11 @@ definitions:
         format: int32
         example: 200
       data:
-        $ref: '#/definitions/PageUtils«GoodCommentReplayEntity»'
+        $ref: '#/definitions/PageUtils«CommentReplyEntity»'
       msg:
         type: string
         example: success
-    title: ResponseWithData«PageUtils«GoodCommentReplayEntity»»
+    title: ResponseWithData«PageUtils«CommentReplyEntity»»
   ResponseWithData«PageUtils«GoodEntity»»:
     type: object
     properties:
