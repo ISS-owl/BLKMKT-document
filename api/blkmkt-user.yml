@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   description: 这是一篇关于用户的API文档
-  version: 1.0.0
+  version: 1.1.0
   title: 用户API文档
   termsOfService: 'http://swagger.io/terms/'
   contact:
@@ -14,12 +14,12 @@ info:
 host: 'localhost:9000'
 basePath: /
 tags:
-  - name: 管理员管理用户
+  - name: 管理员
 paths:
   /user/user/list:
     get:
       tags:
-        - 管理员管理用户
+        - 管理员
       summary: 分页获取所有用户信息
       description: 根据分页参数（可缺省）获取信息
       operationId: listUsingGET
@@ -46,7 +46,7 @@ paths:
   /user/user/:
     post:
       tags:
-        - 管理员管理用户
+        - 管理员
       summary: 手动创建用户
       description: 手动创建用户
       operationId: saveUsingPOST
