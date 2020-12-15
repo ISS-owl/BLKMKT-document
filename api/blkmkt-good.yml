@@ -51,75 +51,62 @@ paths:
           type: integer
           format: int32
           x-example: 1
+        - name: pageNo
+          in: query
+          description: 当前页数
+          required: false
+          type: integer
+          format: int64
+        - name: pageSize
+          in: query
+          description: 页面大小
+          required: false
+          type: integer
+          format: int64
       responses:
         '200':
           description: OK
           schema:
             type: object
             example:
-              code: 200
               msg: success
+              code: 200
               data:
-                - id: 7
-                  ownerId: 1
-                  price: 200
-                  gtype: 0
-                  status: 1
-                  category: 电子产品
-                  totalNum: 1
-                  currentNum: 1
-                  likeNum: 3
-                  goodImgUrl: baidu.com
-                  createTime: '2020-12-13T01:59:23.000+0000'
-                  updateTime: '2020-12-13T01:59:23.000+0000'
-                  title: 华为手机
-                  subtitle: 出9成新华为手机
-                  description: 500出9成新华为手机
-                - id: 8
-                  ownerId: 1
-                  price: 10
-                  gtype: 0
-                  status: 1
-                  category: 课程资料
-                  totalNum: 1
-                  currentNum: 1
-                  likeNum: 0
-                  goodImgUrl: baidu.com
-                  createTime: '2020-12-13T01:59:27.000+0000'
-                  updateTime: '2020-12-13T01:59:27.000+0000'
-                  title: 收WPFTest
-                  subtitle: 就是那个HJC上课用到的WPFTest
-                  description: 王涛NB
-                - id: 10
-                  ownerId: 1
-                  price: 5
-                  gtype: 1
-                  status: 1
-                  category: 课程资料
-                  totalNum: 1
-                  currentNum: 1
-                  likeNum: 0
-                  goodImgUrl: baidu.com
-                  createTime: '2020-12-13T06:41:34.000+0000'
-                  updateTime: '2020-12-13T06:41:34.000+0000'
-                  title: 代课
-                  subtitle: 早八青楼520代课
-                  description: 不会点名，签到就可以走
-                - id: 11
-                  ownerId: 1
-                  price: 200
-                  gtype: 0
-                  status: 0
-                  category: 课程资料
-                  totalNum: 1
-                  currentNum: 1
-                  likeNum: 0
-                  goodImgUrl: bing.com
-                  createTime: '2020-12-15T03:42:51.000+0000'
-                  updateTime: '2020-12-15T03:42:51.000+0000'
-                  title: 出算法李春葆
-                  subtitle: 5r出算法李春葆
-                  description: 内含算法开卷考内容
+                totalCount: 4
+                pageSize: 2
+                totalPage: 2
+                currPage: 1
+                list:
+                  - id: 7
+                    ownerId: 1
+                    price: 200
+                    gtype: 0
+                    status: 1
+                    category: 电子产品
+                    totalNum: 1
+                    currentNum: 1
+                    likeNum: 3
+                    goodImgUrl: baidu.com
+                    createTime: '2020-12-13T01:59:23.000+0000'
+                    updateTime: '2020-12-13T01:59:23.000+0000'
+                    title: 华为手机
+                    subtitle: 出9成新华为手机
+                    description: 500出9成新华为手机
+                  - id: 8
+                    ownerId: 1
+                    price: 10
+                    gtype: 0
+                    status: 1
+                    category: 课程资料
+                    totalNum: 1
+                    currentNum: 1
+                    likeNum: 0
+                    goodImgUrl: baidu.com
+                    createTime: '2020-12-13T01:59:27.000+0000'
+                    updateTime: '2020-12-13T01:59:27.000+0000'
+                    title: 收WPFTest
+                    subtitle: 就是那个HJC上课用到的WPFTest
+                    description: 王涛NB
               
     post:
       tags:
@@ -362,6 +349,18 @@ paths:
           description: '降序字段,[like|createTime]'
           required: false
           type: string
+        - name: pageNo
+          in: query
+          description: 当前页数
+          required: false
+          type: integer
+          format: int64
+        - name: pageSize
+          in: query
+          description: 页面大小
+          required: false
+          type: integer
+          format: int64
       responses:
         '200':
           description: OK
@@ -370,38 +369,34 @@ paths:
               msg: success
               code: 200
               data:
-                - userId: 1
-                  username: 王涛
-                  headImgUrl: baidu.com
-                  commentEntity:
-                    id: 2
-                    goodId: 7
-                    userId: 1
-                    content: 我们华为真是太棒啦
-                    createTime: '2020-12-13T12:25:18.000+0000'
-                    updateTime: '2020-12-13T12:25:18.000+0000'
-                  replayEntities:
-                    - userId: 1
-                      username: 王涛
-                      headImgUrl: baidu.com
-                      commentReplayEntity:
-                        id: 3
-                        commentId: 2
-                        userId: 1
-                        content: 你做的好！你做的好啊！
-                        createTime: '2020-12-13T12:33:01.000+0000'
-                        updateTime: '2020-12-13T12:33:01.000+0000'
-                - userId: 2
-                  username: 方正
-                  headImgUrl: google.com
-                  commentEntity:
-                    id: 4
-                    goodId: 7
-                    userId: 2
-                    content: 收，妮明天有空不
-                    createTime: '2020-12-13T12:32:32.000+0000'
-                    updateTime: '2020-12-13T12:32:32.000+0000'
-                  replayEntities: []
+                totalCount: 2
+                pageSize: 1
+                totalPage: 2
+                currPage: 1
+                list:
+                  - userId: 1
+                    username: 王涛
+                    headImgUrl: baidu.com
+                    commentEntity:
+                      id: 2
+                      goodId: 7
+                      userId: 1
+                      content: 我们华为真是太棒啦
+                      likeNum: 1
+                      createTime: '2020-12-13T12:25:18.000+0000'
+                      updateTime: '2020-12-13T12:25:18.000+0000'
+                    replayEntities:
+                      - userId: 1
+                        username: 王涛
+                        headImgUrl: baidu.com
+                        commentReplayEntity:
+                          id: 3
+                          commentId: 2
+                          userId: 1
+                          content: 你做的好！你做的好啊！
+                          likeNum: 1
+                          createTime: '2020-12-13T12:33:01.000+0000'
+                          updateTime: '2020-12-13T12:33:01.000+0000'
   '/good/good_comment/like/{id}':
     put:
       tags:
