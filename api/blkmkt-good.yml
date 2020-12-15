@@ -357,6 +357,11 @@ paths:
           required: true
           type: integer
           format: int32
+        - name: sort
+          in: query
+          description: '降序字段,[like|createTime]'
+          required: false
+          type: string
       responses:
         '200':
           description: OK
