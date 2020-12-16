@@ -1,3 +1,6 @@
+-- ----------------------------
+-- Table structure for good
+-- ----------------------------
 DROP TABLE IF EXISTS `good`;
 CREATE TABLE `good`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '货物id',
@@ -19,6 +22,9 @@ CREATE TABLE `good`  (
 );
 ALTER TABLE `good` COMMENT '货物表';
 
+-- ----------------------------
+-- Table structure for good's comment
+-- ----------------------------
 DROP TABLE IF EXISTS `good_comment`;
 CREATE TABLE `good_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
@@ -32,6 +38,9 @@ CREATE TABLE `good_comment` (
 );
 ALTER TABLE `good_comment` COMMENT '货物评论';
 
+-- ----------------------------
+-- Table structure for comment_replay
+-- ----------------------------
 DROP TABLE IF EXISTS `comment_replay`;
 CREATE TABLE `comment_replay` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',

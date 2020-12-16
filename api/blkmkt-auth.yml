@@ -11,7 +11,9 @@ info:
   license:
     name: GPL-v3.0
     url: 'https://www.gnu.org/licenses/gpl-3.0.html'
-host: 'localhost:20000'
+host: '39.101.1.199:20000'
+schemes: 
+  - 'http'
 basePath: /
 tags:
   - name: хож╓
