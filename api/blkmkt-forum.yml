@@ -1,0 +1,720 @@
+swagger: '2.0'
+info:
+  description: 这是一篇关于论坛的API文档
+  version: 1.0.0
+  title: 论坛API文档
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    name: jerrywyn
+    url: 'https://github.com/jerrywyn'
+    email: 414085716@qq.com
+  license:
+    name: GPL-v3.0
+    url: 'https://www.gnu.org/licenses/gpl-3.0.html'
+host: 'localhost:8080'
+basePath: /
+tags:
+  - name: 回复
+    description: 所有关于回复的内容
+  - name: 文章
+    description: 所有关于文章的内容
+paths:
+  /forum/article/:
+    post:
+      tags:
+        - 文章
+      summary: 保存信息
+      description: 保存信息
+      operationId: saveUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: article
+          description: article entity
+          required: true
+          schema:
+            $ref: '#/definitions/ArticleEntity'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - 文章
+      summary: 更新信息
+      description: 更新信息
+      operationId: updateUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: article
+          description: article entity
+          required: true
+          schema:
+            $ref: '#/definitions/ArticleEntity'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - 文章
+      summary: 删除
+      description: 删除信息
+      operationId: deleteUsingDELETE
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: ids
+          description: id array
+          required: true
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/forum/article/dislike/{id}':
+    put:
+      tags:
+        - 文章
+      summary: 点踩文章
+      description: 点踩文章
+      operationId: dislikeUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: 文章的id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /forum/article/hot/list:
+    get:
+      tags:
+        - 文章
+      summary: 按点赞数排序所有信息
+      description: 根据分页参数（可缺省）获取信息
+      operationId: hotListUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: pageNo
+          in: query
+          description: Number of pages
+          required: false
+          type: integer
+          format: int64
+        - name: pageSize
+          in: query
+          description: Size of pages
+          required: false
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/forum/article/like/{id}':
+    put:
+      tags:
+        - 文章
+      summary: 点赞文章
+      description: 点赞文章
+      operationId: likeUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: 文章的id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /forum/article/list:
+    get:
+      tags:
+        - 文章
+      summary: 所有信息
+      description: 根据分页参数（可缺省）获取信息
+      operationId: listUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: pageNo
+          in: query
+          description: Number of pages
+          required: false
+          type: integer
+          format: int64
+        - name: pageSize
+          in: query
+          description: Size of pages
+          required: false
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/forum/article/undo-dislike/{id}':
+    put:
+      tags:
+        - 文章
+      summary: 取消点踩文章
+      description: 取消点踩文章
+      operationId: undoDislikeUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: 文章的id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/forum/article/undo-like/{id}':
+    put:
+      tags:
+        - 文章
+      summary: 取消点赞文章
+      description: 取消点赞文章
+      operationId: undoLikeUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: 文章的id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/forum/article/{id}':
+    get:
+      tags:
+        - 文章
+      summary: 信息
+      description: 获取指定id的信息
+      operationId: infoUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /forum/reply/:
+    post:
+      tags:
+        - 回复
+      summary: 保存回复
+      description: 保存回复
+      operationId: saveUsingPOST_1
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: reply
+          description: reply entity
+          required: true
+          schema:
+            $ref: '#/definitions/ReplyEntity'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - 回复
+      summary: 更新回复
+      description: 更新回复
+      operationId: updateUsingPUT_1
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: reply
+          description: reply entity
+          required: true
+          schema:
+            $ref: '#/definitions/ReplyEntity'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - 回复
+      summary: 删除回复
+      description: 删除回复
+      operationId: deleteUsingDELETE_1
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: ids
+          description: id array
+          required: true
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/forum/reply/fromArticle/{article_id}':
+    get:
+      tags:
+        - 回复
+      summary: 获取某个文章的所有回复信息
+      description: 获取某个文章的所有回复信息
+      operationId: getReplyByArticleIdUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: article_id
+          in: path
+          description: 文章id
+          required: true
+          type: integer
+          format: int32
+        - name: pageNo
+          in: query
+          description: 当前页数
+          required: true
+          type: integer
+          format: int64
+        - name: pageSize
+          in: query
+          description: 页面大小
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/forum/reply/getDiscuss/{id}':
+    get:
+      tags:
+        - 回复
+      summary: 回复上下文
+      description: 获取指定id的回复相关的所有回复
+      operationId: getDiscussUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: 回复id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/forum/reply/like/{id}':
+    put:
+      tags:
+        - 回复
+      summary: 点赞回复
+      description: 点赞回复
+      operationId: likeUsingPUT_1
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: 回复id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /forum/reply/list:
+    get:
+      tags:
+        - 回复
+      summary: 所有信息
+      description: 根据分页参数（可缺省）获取信息
+      operationId: listUsingGET_1
+      produces:
+        - '*/*'
+      parameters:
+        - name: pageNo
+          in: query
+          description: Number of pages
+          required: false
+          type: integer
+          format: int64
+        - name: pageSize
+          in: query
+          description: Size of pages
+          required: false
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/forum/reply/undo-like/{id}':
+    put:
+      tags:
+        - 回复
+      summary: 取消点赞回复
+      description: 点赞回复
+      operationId: undoLikeUsingPUT_1
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: 回复id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/forum/reply/{id}':
+    get:
+      tags:
+        - 回复
+      summary: 获取指定id的回复信息
+      description: 获取指定id的回复信息
+      operationId: infoUsingGET_1
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+definitions:
+  ArticleEntity:
+    type: object
+    properties:
+      able:
+        type: integer
+        format: int32
+        description: 是否被举报，1为举报
+      author:
+        type: string
+        description: 文章作者
+      content:
+        type: string
+        description: 文章内容
+      date:
+        type: string
+        format: date-time
+        description: 发布时间
+      dislikeNum:
+        type: integer
+        format: int32
+        description: 点踩数
+      id:
+        type: integer
+        format: int32
+        description: 主键
+      likeNum:
+        type: integer
+        format: int32
+        description: 点赞数
+      title:
+        type: string
+        description: 文章标题
+      userid:
+        type: integer
+        format: int32
+        description: 外键->表user
+    title: ArticleEntity
+  ReplyEntity:
+    type: object
+    properties:
+      able:
+        type: integer
+        format: int32
+        description: 是否被举报，1为举报
+      articleId:
+        type: integer
+        format: int32
+        description: 外键->表article
+      content:
+        type: string
+        description: 评论内容
+      date:
+        type: string
+        format: date-time
+        description: 评论时间
+      firstId:
+        type: integer
+        format: int32
+        description: 根评论id，若为一级评论则为0
+      id:
+        type: integer
+        format: int32
+        description: 主键
+      likeNum:
+        type: integer
+        format: int32
+        description: 点赞数
+      preId:
+        type: integer
+        format: int32
+        description: 0为文章评论，非0为被回复评论id
+      replyer:
+        type: string
+        description: 评论人
+    title: ReplyEntity
