@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  description: 这是一篇关于论坛的API文档
+  description: 这是一篇关于商品的API文档
   version: 1.0.0
   title: 论坛API文档
   termsOfService: 'http://swagger.io/terms/'
@@ -11,7 +11,7 @@ info:
   license:
     name: GPL-v3.0
     url: 'https://www.gnu.org/licenses/gpl-3.0.html'
-host: 'localhost:8080'
+host: 'localhost:11000'
 basePath: /
 tags:
   - name: 回复
@@ -42,8 +42,9 @@ paths:
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
+            example:
+              msg:success
+              code:200
         '201':
           description: Created
         '401':
@@ -74,8 +75,9 @@ paths:
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
+            example:
+              msg:success
+              code:200
         '201':
           description: Created
         '401':
@@ -107,8 +109,9 @@ paths:
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
+            example:
+              msg:success
+              code:200
         '204':
           description: No Content
         '401':
@@ -138,8 +141,9 @@ paths:
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
+            example:
+              msg:success
+              code:200
         '201':
           description: Created
         '401':
@@ -175,14 +179,31 @@ paths:
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
+            example:
+              page:
+                totalCount: 12
+                pageSize: 10
+                totalPage: 2
+                currPage: 1
+                list: 
+                - id: 1001
+                  userid: 1005
+                  able: 0
+                  likeNum: 0
+                  dislikeNum: 0
+                  title: 五叔的女儿
+                  author: 是老杨啊
+                  date: '2018-12-21T00:21:26.000+0000'
+                  content: '在北京一个。。。部分。'
+                - id: 1011
+                  userid: 1007
+                  able: 0
+                  likeNum: 0
+                  dislikeNum: 0
+                  title: 'test'
+                  author: '一个被封了的账号'
+                  date: '2018-12-25T06:48:16.000+0000'
+                  content: 'test'
   '/forum/article/like/{id}':
     put:
       tags:
@@ -206,8 +227,9 @@ paths:
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
+            example:
+              msg:success
+              code:200
         '201':
           description: Created
         '401':
@@ -243,14 +265,31 @@ paths:
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
+            example:
+              page:
+                totalCount: 12
+                pageSize: 10
+                totalPage: 2
+                currPage: 1
+                list: 
+                - id: 1001
+                  userid: 1005
+                  able: 0
+                  likeNum: 0
+                  dislikeNum: 0
+                  title: 五叔的女儿
+                  author: 是老杨啊
+                  date: '2018-12-21T00:21:26.000+0000'
+                  content: '在北京一个。。。部分。'
+                - id: 1011
+                  userid: 1007
+                  able: 0
+                  likeNum: 0
+                  dislikeNum: 0
+                  title: 'test'
+                  author: '一个被封了的账号'
+                  date: '2018-12-25T06:48:16.000+0000'
+                  content: 'test'
   '/forum/article/undo-dislike/{id}':
     put:
       tags:
@@ -274,8 +313,9 @@ paths:
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
+            example:
+              msg:success
+              code:200
         '201':
           description: Created
         '401':
@@ -307,8 +347,9 @@ paths:
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
+            example:
+              msg:success
+              code:200
         '201':
           description: Created
         '401':
@@ -338,14 +379,16 @@ paths:
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
+            example:
+                  id: 1001
+                  userid: 1005
+                  able: 0
+                  likeNum: 0
+                  dislikeNum: 0
+                  title: 五叔的女儿
+                  author: 是老杨啊
+                  date: '2018-12-21T00:21:26.000+0000'
+                  content: '在北京一个。。。部分。'
   /forum/reply/:
     post:
       tags:
@@ -369,8 +412,9 @@ paths:
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
+            example:
+              msg:success
+              code:200
         '201':
           description: Created
         '401':
@@ -401,8 +445,9 @@ paths:
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
+            example:
+              msg:success
+              code:200
         '201':
           description: Created
         '401':
@@ -434,8 +479,9 @@ paths:
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
+            example:
+              msg:success
+              code:200
         '204':
           description: No Content
         '401':
@@ -447,7 +493,7 @@ paths:
       tags:
         - 回复
       summary: 获取某个文章的所有回复信息
-      description: 获取某个文章的所有回复信息
+      description: 根据分页参数（可缺省）获取某个文章的所有回复信息
       operationId: getReplyByArticleIdUsingGET
       produces:
         - '*/*'
@@ -461,13 +507,13 @@ paths:
         - name: pageNo
           in: query
           description: 当前页数
-          required: true
+          required: false
           type: integer
           format: int64
         - name: pageSize
           in: query
           description: 页面大小
-          required: true
+          required: false
           type: integer
           format: int64
       responses:
@@ -475,14 +521,53 @@ paths:
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
+            example:
+              data: 
+                - id: "1002"
+                  articleId: "1007"
+                  preId: "0"
+                  firstId: "0"
+                  able: "0"
+                  likeNum: "0"
+                  replyer: "是老杨啊"
+                  date: "2018-12-22T16:11:42.000+0000"
+                  content: "666"
+                - id: "1003"
+                  articleId: "1007"
+                  preId: "1002"
+                  firstId: "1002"
+                  able: "0"
+                  likeNum: "0"
+                  replyer: "是老杨啊"
+                  date: "2018-12-22T16:12:11.000+0000"
+                  content: "说的好"
+                - id: "1004"
+                  articleId: "1007"
+                  preId: "1003"
+                  firstId: "1002"
+                  able: "0"
+                  likeNum: "0"
+                  replyer: "是老杨啊"
+                  date: "2018-12-22T16:12:41.000+0000"
+                  content: "哎哟"
+                - id: "1005"
+                  articleId: "1007"
+                  preId: "1002"
+                  firstId: "1002"
+                  able: "0"
+                  likeNum: "0"
+                  replyer: "臭弟弟"
+                  date: "2018-12-22T16:13:01.000+0000"
+                  content: "是多久才能深刻的接口啊谁对谁错但是"
+                - id: "1006"
+                  articleId: "1007"
+                  preId: "0"
+                  firstId: "0"
+                  able: "0"
+                  likeNum: "0"
+                  replyer: "是老杨啊"
+                  date: "2018-12-22T16:13:26.000+0000"
+                  content: "咳咳"
   '/forum/reply/getDiscuss/{id}':
     get:
       tags:
@@ -499,19 +584,61 @@ paths:
           required: true
           type: integer
           format: int32
+        - name: pageNo
+          in: query
+          description: 当前页数
+          required: false
+          type: integer
+          format: int64
+        - name: pageSize
+          in: query
+          description: 页面大小
+          required: false
+          type: integer
+          format: int64
       responses:
         '200':
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
+            example:
+              discuss: 
+                - id: "1002"
+                  articleId: "1007"
+                  preId: "0"
+                  firstId: "0"
+                  able: "0"
+                  likeNum: "0"
+                  replyer: "是老杨啊"
+                  date: "2018-12-22T16:11:42.000+0000"
+                  content: "666"
+                - id: "1003"
+                  articleId: "1007"
+                  preId: "1002"
+                  firstId: "1002"
+                  able: "0"
+                  likeNum: "0"
+                  replyer: "是老杨啊"
+                  date: "2018-12-22T16:12:11.000+0000"
+                  content: "说的好"
+                - id: "1004"
+                  articleId: "1007"
+                  preId: "1003"
+                  firstId: "1002"
+                  able: "0"
+                  likeNum: "0"
+                  replyer: "是老杨啊"
+                  date: "2018-12-22T16:12:41.000+0000"
+                  content: "哎哟"
+                - id: "1005"
+                  articleId: "1007"
+                  preId: "1002"
+                  firstId: "1002"
+                  able: "0"
+                  likeNum: "0"
+                  replyer: "臭弟弟"
+                  date: "2018-12-22T16:13:01.000+0000"
+                  content: "是多久才能深刻的接口啊谁对谁错但是"
   '/forum/reply/like/{id}':
     put:
       tags:
@@ -535,8 +662,9 @@ paths:
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
+            example:
+              msg:success
+              code:200
         '201':
           description: Created
         '401':
@@ -572,14 +700,32 @@ paths:
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
+            example:
+              page: 
+                totalCount: 7
+                pageSize: 10
+                totalPage: 1
+                currPage: 1
+                list: 
+                - id: 1001
+                  articleId: 1001
+                  preId: 0
+                  firstId: 0
+                  able: 0
+                  likeNum: 0
+                  replyer: "是老杨啊"
+                  date: "2018-12-21T00:21:14.000+0000"
+                  content: "哈哈哈"
+                - id: 1002
+                  articleId: 1007
+                  preId: 0
+                  firstId: 0
+                  able: 0
+                  likeNum: 0
+                  replyer: "是老杨啊"
+                  date: "2018-12-22T16:11:42.000+0000"
+                  content: "666"
+
   '/forum/reply/undo-like/{id}':
     put:
       tags:
@@ -603,8 +749,9 @@ paths:
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
+            example:
+              msg:success
+              code:200
         '201':
           description: Created
         '401':
@@ -634,14 +781,16 @@ paths:
           description: OK
           schema:
             type: object
-            additionalProperties:
-              type: object
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
+            example:
+              id: 1001
+              articleId: 1001
+              preId: 0
+              firstId: 0
+              able: 0
+              likeNum: 0
+              replyer: "是老杨啊"
+              date: "2018-12-21T00:21:14.000+0000"
+              content: "哈哈哈"
 definitions:
   ArticleEntity:
     type: object
