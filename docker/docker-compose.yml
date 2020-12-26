@@ -93,21 +93,11 @@ services:
       - 3000:3000
     restart: on-failure
   # Rabbitmq
-  rabbitmq:
-    container_name: rabbitmq
-    image: rabbitmq:3.8.9
-    hostname: myRabbit
-    volumes:
-      - /mydata/rabbitmq:/var/lib/rabbitmq
-    ports:
-      - "5672:5672"
-    restart: always
-  # Rabbitmq web management plugin
   rabbitmq-management:
     container_name: rabbitmq
     image: rabbitmq:3.8.9-management
-    hostname: myRabbit
-    ports: 
+    ports:
+      - "5672:5672" 
       - "15672:15672"
     restart: always
 
