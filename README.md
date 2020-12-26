@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./resources/assets/icon.png"/ Height=200 Width=200>
+  <img src="./assets/icon.png" Height=200 Width=200>
 </p>
 
 <h1 align="center">BLKMKT document</h1>
@@ -67,6 +67,23 @@
             >
             <div style="margin-top: 4px">
                 <a href="https://github.com/intchar-hub" title="Github"
+                    ><img
+                        width="16"
+                        src="https://image.flaticon.com/icons/svg/2111/2111425.svg"
+                /></a>
+            </div>
+        </td>
+     <td align="center">
+            <a href="https://github.com/Lotherxuan"
+                ><img
+                    src="https://github.com/Lotherxuan.png?size=100"
+                    width="100"
+                    style="margin-bottom: -4px; border-radius: 8px;"
+                    alt="Yuxuan Luo"
+                /><br /><sub><b>Yuxuan Luo</b></sub></a
+            >
+            <div style="margin-top: 4px">
+                <a href="https://github.com/Lotherxuan" title="Github"
                     ><img
                         width="16"
                         src="https://image.flaticon.com/icons/svg/2111/2111425.svg"
