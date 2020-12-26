@@ -1,0 +1,5 @@
+blkmkt:
+  thread:
+    corePoolSize: 10
+    maxPoolSize: 20
+    keepAliveTime: 300

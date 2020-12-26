@@ -1,0 +1,6 @@
+server:
+  port: 88
+
+spring:
+  application:
+    name: blkmkt-gateway

@@ -1,0 +1,4 @@
+blkmkt:
+  elasticsearch:
+    host: 39.101.64.188
+    port: 9200
