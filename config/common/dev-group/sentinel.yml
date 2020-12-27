@@ -1,0 +1,10 @@
+spring:  
+  cloud:
+    sentinel:
+      transport:
+        dashboard: http://39.101.64.188:8858
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
