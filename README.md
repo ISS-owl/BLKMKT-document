@@ -13,10 +13,11 @@
     <a href="https://github.com/ISS-owl/blkmkt-document" style="text-decoration:none" >
         <img src="https://img.shields.io/github/repo-size/ISS-owl/blkmkt-document" alt="Size"/>
     </a>
-  <a href="https://github.com/ISS-owl/blkmkt-document/blob/main/LICENSE" style="text-decoration:none">
-        <img src="https://img.shields.io/github/license/ISS-owl/blkmkt-document" alt="license"/>
+  <a href="https://github.com/ISS-owl/BLKMKT-document" style="text-decoration:none">
+        <img src="https://img.shields.io/github/stars/ISS-owl/BLKMKT-document?style=social" alt="Github Star"/>
     </a>
 </p>
+
 
 # Structure
 
