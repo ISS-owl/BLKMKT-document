@@ -17,6 +17,39 @@
         <img src="https://img.shields.io/github/license/ISS-owl/blkmkt-document" alt="license"/>
     </a>
 </p>
+# Structure
+
+```
+├─.github
+│  └─ISSUE_TEMPLATE
+├─api			// API documentation
+├─assets	    // Static resource
+├─config	    // Configuration files of all modules
+│  ├─blkmkt-auth-server
+│  │  └─dev-group
+│  ├─blkmkt-gateway
+│  │  └─dev-group
+│  ├─blkmkt-good
+│  │  └─dev-group
+│  ├─blkmkt-order
+│  │  └─dev-group
+│  ├─blkmkt-search
+│  │  └─dev-group
+│  ├─blkmkt-third-party
+│  │  └─dev-group
+│  ├─blkmkt-user
+│  │  └─dev-group
+│  ├─blkmkt-ware
+│  │  └─dev-group
+│  └─common
+│      ├─dev-group
+│      └─prod-group
+├─docker	    // Docker resurouce of all dependencies
+├─docs		    // Project documentation
+└─sql			// SQL files collections
+```
+
+
 
 # Core team
 
