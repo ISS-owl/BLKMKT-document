@@ -100,4 +100,18 @@ services:
       - "5672:5672" 
       - "15672:15672"
     restart: always
+  # Zipkin
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411" 
+    restart: always
+  # Sentinel
+  sentinel:
+    container_name: zipkin
+    image: bladex/sentinel-dashboard
+    ports:
+      - "8858:8858" 
+    restart: always
 
